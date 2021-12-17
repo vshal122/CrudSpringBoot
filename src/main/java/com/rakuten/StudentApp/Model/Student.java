@@ -1,10 +1,15 @@
 package com.rakuten.StudentApp.Model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,7 +35,17 @@ public class Student {
 	@Column
 	private Integer moNumber;
 	
+	@OneToMany(fetch= FetchType.EAGER,cascade= CascadeType.ALL,targetEntity = Subject.class)
+	private List<Subject> subject;
+
 	
+	
+	public List<Subject> getSubjectDetails() {
+		return subject;
+	}
+	public void setSubjectDetails(List<Subject> subjectDetails) {
+		this.subject = subjectDetails;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -64,14 +79,16 @@ public class Student {
 	public Student() {
 		// TODO Auto-generated constructor stub
 	}
-	public Student(Long id,Integer rollNo, String name, Integer age, Integer moNumber) {
+	public Student(Long id, Integer rollNo, String name, Integer age, Integer moNumber, List<Subject> subject) {
 		super();
-		this.id=id;
+		this.id = id;
 		this.rollNo = rollNo;
 		this.name = name;
 		this.age = age;
 		this.moNumber = moNumber;
+		this.subject = subject;
 	}
+	
 	
 	
 
